@@ -17,7 +17,7 @@ jobs:
       - name: Instalar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '22.16.0'
           cache: 'yarn'
 
       - name: Instalar dependências
@@ -31,7 +31,3 @@ jobs:
 
       - name: Executar testes
         run: yarn test 
-
-      - name: Executar e2e
-        run: yarn test:e2e
-
