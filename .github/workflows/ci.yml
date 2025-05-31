@@ -23,11 +23,15 @@ jobs:
       - name: Instalar dependências
         run: yarn install 
 
+      - name: Build 
+        run: yarn build 
+
       - name: Verificar lint
         run: yarn lint 
 
       - name: Executar testes
         run: yarn test 
 
-      - name: Build 
-        run: yarn build 
+      - name: Executar e2e
+        run: yarn test:e2e
+
