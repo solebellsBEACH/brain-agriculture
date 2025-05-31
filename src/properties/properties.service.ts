@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Property } from './entities/property.entity';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 
 @Injectable()
 export class PropertiesService {
-  create(createPropertyDto: CreatePropertyDto) {
-    return 'This action adds a new property';
+  constructor(
+    @InjectRepository(Property)
+    private repository: Repository<Property>,
+  ) { }
+
+  create(dto: CreatePropertyDto) {
+    const property = this.repository.create(dto);
+    return this.repository.save(property);
   }
 
   findAll() {
-    return `This action returns all properties`;
+    return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} property`;
+  async findOne(id: string) {
+    const property = await this.repository.findOneBy({ id });
+    if (!property) throw new NotFoundException('Property not found');
+    return property;
   }
 
-  update(id: number, updatePropertyDto: UpdatePropertyDto) {
-    return `This action updates a #${id} property`;
+  async update(id: string, dto: UpdatePropertyDto) {
+    await this.findOne(id);
+    await this.repository.update(id, dto);
+    return this.repository.findOneBy({ id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} property`;
+  async remove(id: string) {
+    await this.findOne(id);
+    await this.repository.delete(id);
+    return { message: 'Deleted successfully' };
   }
 }
