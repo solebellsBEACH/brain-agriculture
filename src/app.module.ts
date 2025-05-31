@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PropertiesModule } from './properties/properties.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { config } from './ormconfig';
 import { Property } from './properties/entities/property.entity';
 
 @Module({
