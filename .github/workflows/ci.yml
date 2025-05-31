@@ -32,6 +32,13 @@ jobs:
       - name: Executar testes
         run: yarn test 
 
+      - name: Wait for Postgres
+        run: |
+          until nc -z localhost 5432; do
+            echo "Waiting for Postgres...";
+            sleep 1;
+          done
+
       - name: Executar e2e
         run: yarn test:e2e
 

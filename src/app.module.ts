@@ -8,11 +8,7 @@ import { Property } from './properties/entities/property.entity';
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'postgres',
-    database: 'mydatabase',
+    url: "postgres://postgres:postgres@localhost:5432/mydatabase",
     synchronize: true,
     entities: [Property]
   }), PropertiesModule],
