@@ -11,7 +11,7 @@ export const runPropertySeed = async (dataSource: DataSource) => {
         return;
     }
 
-    const result = await repo.save(mocks.propertyMocks.properties);
+    const result = await repo.save(mocks.propertyMocks);
 
     console.log(`Property - Seed executed successfully! - ${result.length} results`,);
 };

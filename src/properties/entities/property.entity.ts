@@ -18,7 +18,7 @@ export class Property {
     @Column()
     state: string;
 
-    @ManyToOne(() => Producer, producer => producer.properties)
+    @ManyToOne(() => Producer, producer => producer.properties,)
     producer: Producer;
 
     @Column({ name: 'total_area', type: 'float', nullable: false, default: 0 })

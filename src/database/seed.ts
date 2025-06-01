@@ -5,8 +5,10 @@ import { runProducerSeed } from './seeds/producers.seed';
 
 AppDataSource.initialize()
     .then(async (dataSource: DataSource) => {
-        // await runPropertySeed(dataSource);
-        // await runProducerSeed(dataSource);
+        await dataSource.synchronize(true);
+        await runProducerSeed(dataSource);
+        await runPropertySeed(dataSource);
+
         await dataSource.destroy();
     })
     .catch((err) => {
