@@ -11,14 +11,14 @@ import { Producer } from './producers/entities/producer.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: "postgres://postgres:postgres@localhost:5432/mydatabase",
+      url: 'postgres://postgres:postgres@localhost:5432/mydatabase',
       synchronize: true,
-      entities: [Property, Producer]
+      entities: [Property, Producer],
     }),
     PropertiesModule,
-    ProducersModule
+    ProducersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

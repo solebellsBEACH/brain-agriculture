@@ -3,60 +3,81 @@ import { ProducersController } from '../producers.controller';
 import { ProducersService } from '../producers.service';
 import { CreateProducerDto } from '../dto/create-producer.dto';
 import { UpdateProducerDto } from '../dto/update-producer.dto';
-
+import { Producer } from '../entities/producer.entity';
 
 describe('ProducersController', () => {
     let controller: ProducersController;
-    let service: ProducersService;
+    let service: jest.Mocked<ProducersService>;
 
-    const mockService = {
-        create: jest.fn(dto => ({ id: 'uuid', ...dto })),
-        findAll: jest.fn(() => ['producer1', 'producer2']),
-        findOne: jest.fn(id => ({ id, name: 'Test', document: '12345678900' })),
-        update: jest.fn((id, dto) => ({ id, ...dto })),
-        remove: jest.fn(id => ({ deleted: true, id })),
+    const mockProducer: Producer = {
+        id: 'uuid-abc',
+        name: 'José da Silva',
+        document: '12345678900',
+        properties: [],
+    };
+
+    const createDto: CreateProducerDto = {
+        name: 'José da Silva',
+        document: '12345678900',
+    };
+
+    const updateDto: UpdateProducerDto = {
+        name: 'João Atualizado',
+        document: '99999999999',
     };
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             controllers: [ProducersController],
             providers: [
-                { provide: ProducersService, useValue: mockService },
+                {
+                    provide: ProducersService,
+                    useValue: {
+                        create: jest.fn().mockResolvedValue(mockProducer),
+                        findAll: jest.fn().mockResolvedValue([mockProducer]),
+                        findOne: jest.fn().mockResolvedValue(mockProducer),
+                        update: jest
+                            .fn()
+                            .mockResolvedValue({ ...mockProducer, ...updateDto }),
+                        remove: jest
+                            .fn()
+                            .mockResolvedValue({ message: 'Deleted successfully' }),
+                    },
+                },
             ],
         }).compile();
 
-        controller = module.get<ProducersController>(ProducersController);
-        service = module.get<ProducersService>(ProducersService);
-    });
-
-    it('should be defined', () => {
-        expect(controller).toBeDefined();
+        controller = module.get(ProducersController);
+        service = module.get(ProducersService);
     });
 
     it('should create a producer', async () => {
-        const dto: CreateProducerDto = { name: 'Lucas', document: '12345678900' };
-        expect(await controller.create(dto)).toEqual({ id: 'uuid', ...dto });
-        expect(mockService.create).toHaveBeenCalledWith(dto);
+        const result = await controller.create(createDto);
+        expect(service.create).toHaveBeenCalledWith(createDto);
+        expect(result).toEqual(mockProducer);
     });
 
     it('should return all producers', async () => {
-        expect(await controller.findAll()).toEqual(['producer1', 'producer2']);
+        const result = await controller.findAll();
+        expect(service.findAll).toHaveBeenCalled();
+        expect(result).toEqual([mockProducer]);
     });
 
-    it('should return one producer by id', async () => {
-        expect(await controller.findOne('uuid')).toEqual({
-            id: 'uuid',
-            name: 'Test',
-            document: '12345678900',
-        });
+    it('should return a producer by ID', async () => {
+        const result = await controller.findOne('uuid-abc');
+        expect(service.findOne).toHaveBeenCalledWith('uuid-abc');
+        expect(result).toEqual(mockProducer);
     });
 
     it('should update a producer', async () => {
-        const dto: UpdateProducerDto = { name: 'Updated', document: '99999999999' };
-        expect(await controller.update('uuid', dto)).toEqual({ id: 'uuid', ...dto });
+        const result = await controller.update('uuid-abc', updateDto);
+        expect(service.update).toHaveBeenCalledWith('uuid-abc', updateDto);
+        expect(result).toEqual({ ...mockProducer, ...updateDto });
     });
 
     it('should delete a producer', async () => {
-        expect(await controller.remove('uuid')).toEqual({ deleted: true, id: 'uuid' });
+        const result = await controller.remove('uuid-abc');
+        expect(service.remove).toHaveBeenCalledWith('uuid-abc');
+        expect(result).toEqual({ message: 'Deleted successfully' });
     });
 });

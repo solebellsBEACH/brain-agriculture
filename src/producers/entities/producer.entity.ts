@@ -3,15 +3,15 @@ import { Property } from '../../properties/entities/property.entity';
 
 @Entity('producers')
 export class Producer {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column({ unique: true })
-    document: string;
+  @Column({ unique: true })
+  document: string;
 
-    @OneToMany(() => Property, property => property.producer, { cascade: true })
-    properties: Property[];
+  @OneToMany(() => Property, (property) => property.producer, { cascade: true })
+  properties: Property[];
 }

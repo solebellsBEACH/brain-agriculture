@@ -1,24 +1,24 @@
-import { IsString, IsNumber } from "class-validator";
+import { IsString, IsNumber } from 'class-validator';
 
 export class CreatePropertyDto {
-    @IsString()
-    name: string;
+  @IsString()
+  name: string;
 
-    @IsString()
-    document: string;
+  @IsString()
+  document: string;
 
-    @IsString()
-    city: string;
+  @IsString()
+  city: string;
 
-    @IsString()
-    state: string;
+  @IsString()
+  state: string;
 
-    @IsNumber()
-    total_area: number;
+  @IsNumber()
+  total_area: number;
 
-    @IsNumber()
-    arable_area: number;
+  @IsNumber()
+  arable_area: number;
 
-    @IsNumber()
-    vegetation_area: number;
+  @IsNumber()
+  vegetation_area: number;
 }

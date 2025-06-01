@@ -25,7 +25,7 @@ describe('PropertiesService', () => {
       name: 'João da Silva',
       document: '12345678900',
       properties: [],
-    }
+    },
   };
 
   const createDto: CreatePropertyDto = {
@@ -50,8 +50,10 @@ describe('PropertiesService', () => {
         {
           provide: getRepositoryToken(Property),
           useValue: {
-            create: jest.fn().mockImplementation(dto => ({ ...dto })),
-            save: jest.fn().mockImplementation(dto => ({ id: 'uuid-123', ...dto })),
+            create: jest.fn().mockImplementation((dto) => ({ ...dto })),
+            save: jest
+              .fn()
+              .mockImplementation((dto) => ({ id: 'uuid-123', ...dto })),
             find: jest.fn().mockResolvedValue([mockProperty]),
             findOneBy: jest.fn().mockResolvedValue(mockProperty),
             update: jest.fn().mockResolvedValue(undefined),
@@ -86,7 +88,9 @@ describe('PropertiesService', () => {
 
   it('should throw NotFoundException if property does not exist', async () => {
     repository.findOneBy.mockResolvedValueOnce(null);
-    await expect(service.findOne('invalid-id')).rejects.toThrow(NotFoundException);
+    await expect(service.findOne('invalid-id')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 
   it('should update a property', async () => {

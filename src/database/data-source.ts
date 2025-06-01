@@ -7,7 +7,7 @@ import { Producer } from '../producers/entities/producer.entity';
 dotenv.config();
 
 export const AppDataSource = new DataSource({
-    type: 'postgres',
-    url: "postgres://postgres:postgres@localhost:5432/mydatabase",
-    entities: [Property, Producer],
+  type: 'postgres',
+  url: 'postgres://postgres:postgres@localhost:5432/mydatabase',
+  entities: [Property, Producer],
 });

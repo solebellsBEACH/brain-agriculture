@@ -23,7 +23,7 @@ describe('PropertiesController', () => {
       name: 'João da Silva',
       document: '12345678900',
       properties: [],
-    }
+    },
   };
 
   const createDto: CreatePropertyDto = {
@@ -51,8 +51,12 @@ describe('PropertiesController', () => {
             create: jest.fn().mockResolvedValue(mockProperty),
             findAll: jest.fn().mockResolvedValue([mockProperty]),
             findOne: jest.fn().mockResolvedValue(mockProperty),
-            update: jest.fn().mockResolvedValue({ ...mockProperty, ...updateDto }),
-            remove: jest.fn().mockResolvedValue({ message: 'Deleted successfully' }),
+            update: jest
+              .fn()
+              .mockResolvedValue({ ...mockProperty, ...updateDto }),
+            remove: jest
+              .fn()
+              .mockResolvedValue({ message: 'Deleted successfully' }),
           },
         },
       ],
