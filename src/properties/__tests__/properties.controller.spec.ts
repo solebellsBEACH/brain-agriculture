@@ -1,25 +1,39 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PropertiesController } from '../properties.controller';
 import { PropertiesService } from '../properties.service';
+import { CreatePropertyDto } from '../dto/create-property.dto';
+import { Property } from '../entities/property.entity';
 
 describe('PropertiesController', () => {
   let controller: PropertiesController;
   let service: jest.Mocked<PropertiesService>;
 
-  const mockProperty = {
+  const mockProperty: Property = {
     id: 'uuid-123',
     name: 'Fazenda Teste',
     document: '999999999',
     city: 'Bauru',
     state: 'SP',
     createdAt: new Date(),
+    total_area: 100,
+    arable_area: 2,
+    vegetation_area: 80,
+    producer: {
+      id: 'c1f4e6d2-45f9-4b6f-b4c3-f54452d8e1d73bb0a',
+      name: 'João da Silva',
+      document: '12345678900',
+      properties: [],
+    },
   };
 
-  const createDto = {
+  const createDto: CreatePropertyDto = {
     name: 'Fazenda Teste',
     document: '999999999',
     city: 'Bauru',
     state: 'SP',
+    total_area: 100,
+    arable_area: 2,
+    vegetation_area: 80,
   };
 
   const updateDto = {
@@ -37,8 +51,12 @@ describe('PropertiesController', () => {
             create: jest.fn().mockResolvedValue(mockProperty),
             findAll: jest.fn().mockResolvedValue([mockProperty]),
             findOne: jest.fn().mockResolvedValue(mockProperty),
-            update: jest.fn().mockResolvedValue({ ...mockProperty, ...updateDto }),
-            remove: jest.fn().mockResolvedValue({ message: 'Deleted successfully' }),
+            update: jest
+              .fn()
+              .mockResolvedValue({ ...mockProperty, ...updateDto }),
+            remove: jest
+              .fn()
+              .mockResolvedValue({ message: 'Deleted successfully' }),
           },
         },
       ],

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Property } from '../entities/property.entity';
 import { PropertiesService } from '../properties.service';
+import { CreatePropertyDto } from '../dto/create-property.dto';
 
 describe('PropertiesService', () => {
   let service: PropertiesService;
@@ -16,13 +17,25 @@ describe('PropertiesService', () => {
     city: 'Bauru',
     state: 'SP',
     createdAt: new Date(),
+    total_area: 100,
+    arable_area: 2,
+    vegetation_area: 80,
+    producer: {
+      id: 'c1f4e6d2-45f9-4b6f-b4c3-f54452d8e1d73bb0a',
+      name: 'João da Silva',
+      document: '12345678900',
+      properties: [],
+    },
   };
 
-  const createDto = {
+  const createDto: CreatePropertyDto = {
     name: 'Fazenda Teste',
     document: '999999999',
     city: 'Bauru',
     state: 'SP',
+    total_area: 100,
+    arable_area: 2,
+    vegetation_area: 80,
   };
 
   const updateDto = {
@@ -37,8 +50,10 @@ describe('PropertiesService', () => {
         {
           provide: getRepositoryToken(Property),
           useValue: {
-            create: jest.fn().mockImplementation(dto => ({ ...dto })),
-            save: jest.fn().mockImplementation(dto => ({ id: 'uuid-123', ...dto })),
+            create: jest.fn().mockImplementation((dto) => ({ ...dto })),
+            save: jest
+              .fn()
+              .mockImplementation((dto) => ({ id: 'uuid-123', ...dto })),
             find: jest.fn().mockResolvedValue([mockProperty]),
             findOneBy: jest.fn().mockResolvedValue(mockProperty),
             update: jest.fn().mockResolvedValue(undefined),
@@ -73,7 +88,9 @@ describe('PropertiesService', () => {
 
   it('should throw NotFoundException if property does not exist', async () => {
     repository.findOneBy.mockResolvedValueOnce(null);
-    await expect(service.findOne('invalid-id')).rejects.toThrow(NotFoundException);
+    await expect(service.findOne('invalid-id')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 
   it('should update a property', async () => {

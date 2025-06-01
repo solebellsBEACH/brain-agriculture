@@ -9,4 +9,4 @@ import { Property } from './entities/property.entity';
   controllers: [PropertiesController],
   providers: [PropertiesService],
 })
-export class PropertiesModule { }
+export class PropertiesModule {}
