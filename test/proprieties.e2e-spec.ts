@@ -48,6 +48,38 @@ describe('Properties (e2e)', () => {
         createdId = res.body.id;
     });
 
+    it('POST /properties - should return props missing message', async () => {
+        const res = await request(app.getHttpServer())
+            .post('/properties')
+            .send({
+                name: faker.person.fullName(),
+                city: 'Ribeirão Preto',
+                state: 'SP',
+                total_area: 100,
+                arable_area: 2,
+                vegetation_area: 80
+            }).expect(400)
+
+        expect((res.body?.message || [])[0]).toBe('document must be a string')
+    });
+
+    it('POST /properties - should return wrong area message', async () => {
+        const res = await request(app.getHttpServer())
+            .post('/properties')
+            .send({
+                name: faker.person.fullName(),
+                city: 'Ribeirão Preto',
+                document: faker.number.int({ min: 100000000000, max: 999999999999 }).toString(),
+                state: 'SP',
+                total_area: 10,
+                arable_area: 2,
+                vegetation_area: 80
+            })
+            .expect(500)
+
+        expect(res.body.message || '').toBe("The sum of the arable area and vegetation area must be smaller than the total area")
+    });
+
     it('GET /properties - should return all properties', async () => {
         const res = await request(app.getHttpServer())
             .get('/properties')

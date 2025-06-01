@@ -1,5 +1,7 @@
 import {
   Controller, Get, Post, Body, Param, Put, Delete, ParseUUIDPipe,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { PropertiesService } from './properties.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
@@ -13,10 +15,13 @@ export class PropertiesController {
   create(@Body() dto: CreatePropertyDto) {
     const { total_area, vegetation_area, arable_area } = dto
     if (!(arable_area + vegetation_area <= total_area)) {
-      return {
-        status: 500,
-        message: "Valores de área sao incopativeis"
-      }
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: "The sum of the arable area and vegetation area must be smaller than the total area",
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     } else {
       return this.service.create(dto);
     }
