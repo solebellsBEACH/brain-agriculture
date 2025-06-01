@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Property } from './properties/entities/property.entity';
 import { ProducersModule } from './producers/producers.module';
 import { Producer } from './producers/entities/producer.entity';
+import { Crop } from './crop/entities/crop.entity';
+import { CropModule } from './crop/crop.module';
 
 @Module({
   imports: [
@@ -13,12 +15,13 @@ import { Producer } from './producers/entities/producer.entity';
       type: 'postgres',
       url: 'postgres://postgres:postgres@localhost:5432/mydatabase',
       synchronize: true,
-      entities: [Property, Producer],
+      entities: [Property, Producer, Crop],
     }),
     PropertiesModule,
     ProducersModule,
+    CropModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,4 +1,5 @@
 import { Producer } from 'src/producers/entities/producer.entity';
+import { propertyMocks } from './property.mock';
 
 export const producersMock: Producer[] = [
   {
