@@ -3,11 +3,13 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { DataSource } from 'typeorm';
+import { faker } from '@faker-js/faker/.';
 
 describe('Properties (e2e)', () => {
     let app: INestApplication;
     let dataSource: DataSource;
     let createdId: string;
+    let name: string;
 
     beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -27,18 +29,22 @@ describe('Properties (e2e)', () => {
     });
 
     it('POST /properties - should create a property', async () => {
+        name = faker.person.fullName()
         const res = await request(app.getHttpServer())
             .post('/properties')
             .send({
-                name: 'Fazenda São João',
-                document: '12345678900',
+                name,
+                document: faker.number.int({ min: 100000000000, max: 999999999999 }).toString(),
                 city: 'Ribeirão Preto',
                 state: 'SP',
+                total_area: 100,
+                arable_area: 2,
+                vegetation_area: 80
             })
             .expect(201);
 
         expect(res.body).toHaveProperty('id');
-        expect(res.body.name).toBe('Fazenda São João');
+        expect(res.body.name).toBe(name);
         createdId = res.body.id;
     });
 
@@ -57,7 +63,7 @@ describe('Properties (e2e)', () => {
             .expect(200);
 
         expect(res.body.id).toBe(createdId);
-        expect(res.body.name).toBe('Fazenda São João');
+        expect(res.body.name).toBe(name);
     });
 
     it('PUT /properties/:id - should update the property', async () => {

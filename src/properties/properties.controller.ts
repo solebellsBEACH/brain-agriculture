@@ -11,7 +11,16 @@ export class PropertiesController {
 
   @Post()
   create(@Body() dto: CreatePropertyDto) {
-    return this.service.create(dto);
+    const { total_area, vegetation_area, arable_area } = dto
+    if (!(arable_area + vegetation_area <= total_area)) {
+      return {
+        status: 500,
+        message: "Valores de área sao incopativeis"
+      }
+    } else {
+      return this.service.create(dto);
+    }
+
   }
 
   @Get()

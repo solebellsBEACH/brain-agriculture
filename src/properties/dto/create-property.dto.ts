@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsString, IsNumber } from "class-validator";
 
 export class CreatePropertyDto {
     @IsString()
@@ -12,4 +12,13 @@ export class CreatePropertyDto {
 
     @IsString()
     state: string;
+
+    @IsNumber()
+    total_area: number;
+
+    @IsNumber()
+    arable_area: number;
+
+    @IsNumber()
+    vegetation_area: number;
 }
