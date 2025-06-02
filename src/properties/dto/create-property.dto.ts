@@ -5,9 +5,6 @@ export class CreatePropertyDto {
   name: string;
 
   @IsString()
-  document: string;
-
-  @IsString()
   city: string;
 
   @IsString()
