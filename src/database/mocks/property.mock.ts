@@ -2,7 +2,8 @@ import { faker } from '@faker-js/faker';
 import { Property } from 'src/properties/entities/property.entity';
 import { producersMock } from './producers.mock';
 
-const findProducerByName = (name: string) => producersMock.find(p => p.name === name)!;
+const findProducerByName = (name: string) =>
+  producersMock.find((p) => p.name === name)!;
 
 export const propertyMocks: Property[] = [
   {

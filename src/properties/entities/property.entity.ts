@@ -1,9 +1,12 @@
 import { Crop } from '../../crop/entities/crop.entity';
 import { Producer } from '../../producers/entities/producer.entity';
 import {
-  Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
-
 
 @Entity()
 export class Property {
@@ -28,7 +31,9 @@ export class Property {
   @Column('float')
   vegetation_area: number;
 
-  @ManyToOne(() => Producer, (producer) => producer.properties, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Producer, (producer) => producer.properties, {
+    onDelete: 'CASCADE',
+  })
   producer: Producer;
 
   @OneToMany(() => Crop, (crop) => crop.property, { cascade: true })

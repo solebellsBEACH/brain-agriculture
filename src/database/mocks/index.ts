@@ -5,5 +5,5 @@ import { propertyMocks } from './property.mock';
 export const mocks = {
   propertyMocks,
   producersMock,
-  cropsMock
+  cropsMock,
 };

@@ -19,9 +19,9 @@ import { CropModule } from './crop/crop.module';
     }),
     PropertiesModule,
     ProducersModule,
-    CropModule
+    CropModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

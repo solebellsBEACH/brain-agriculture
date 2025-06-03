@@ -12,10 +12,9 @@ import { CreateCropDto } from './dto/create-crop.dto';
 import { CropsService } from './crops.service';
 import { UpdateCropDto } from './dto/update-crop.dto';
 
-
 @Controller('crops')
 export class CropsController {
-  constructor(private readonly service: CropsService) { }
+  constructor(private readonly service: CropsService) {}
 
   @Post()
   create(@Body() dto: CreateCropDto) {

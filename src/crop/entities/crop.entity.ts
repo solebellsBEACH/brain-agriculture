@@ -1,7 +1,5 @@
 import { Property } from '../../properties/entities/property.entity';
-import {
-  Entity, PrimaryGeneratedColumn, Column, ManyToOne,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Crop {
@@ -14,6 +12,8 @@ export class Crop {
   @Column()
   harvest_year: number;
 
-  @ManyToOne(() => Property, (property) => property.crops, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Property, (property) => property.crops, {
+    onDelete: 'CASCADE',
+  })
   property: Property;
 }

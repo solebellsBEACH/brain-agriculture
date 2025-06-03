@@ -6,7 +6,7 @@ import { Crop } from '../entities/crop.entity';
 import { UpdateCropDto } from '../dto/update-crop.dto';
 import { mocks } from '../../database/mocks';
 
-const mockCrop: Crop = mocks.cropsMock[0]
+const mockCrop: Crop = mocks.cropsMock[0];
 
 describe('CropsController', () => {
   let controller: CropsController;

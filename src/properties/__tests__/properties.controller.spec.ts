@@ -9,7 +9,7 @@ describe('PropertiesController', () => {
   let controller: PropertiesController;
   let service: jest.Mocked<PropertiesService>;
 
-  const mockProperty: Property = mocks.propertyMocks[0]
+  const mockProperty: Property = mocks.propertyMocks[0];
 
   const createDto: CreatePropertyDto = {
     name: 'Fazenda Teste',

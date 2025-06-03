@@ -11,7 +11,7 @@ describe('PropertiesService', () => {
   let service: PropertiesService;
   let repository: jest.Mocked<Repository<Property>>;
 
-  const mockProperty: Property = mocks.propertyMocks[0]
+  const mockProperty: Property = mocks.propertyMocks[0];
 
   const createDto: CreatePropertyDto = {
     name: 'Fazenda Teste',

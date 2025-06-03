@@ -13,7 +13,5 @@ export const runCropSeed = async (dataSource: DataSource) => {
 
   const result = await repo.save(mocks.cropsMock);
 
-  console.log(
-    `Crop - Seed executed successfully! - ${result.length} results`,
-  );
+  console.log(`Crop - Seed executed successfully! - ${result.length} results`);
 };

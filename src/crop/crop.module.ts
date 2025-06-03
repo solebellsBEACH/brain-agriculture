@@ -9,4 +9,4 @@ import { Crop } from './entities/crop.entity';
   controllers: [CropsController],
   providers: [CropsService],
 })
-export class CropModule { }
+export class CropModule {}

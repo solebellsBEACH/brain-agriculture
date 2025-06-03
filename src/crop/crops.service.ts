@@ -5,13 +5,12 @@ import { CreateCropDto } from './dto/create-crop.dto';
 import { Crop } from './entities/crop.entity';
 import { UpdateCropDto } from './dto/update-crop.dto';
 
-
 @Injectable()
 export class CropsService {
   constructor(
     @InjectRepository(Crop)
     private repository: Repository<Crop>,
-  ) { }
+  ) {}
 
   create(dto: CreateCropDto) {
     const property = this.repository.create(dto);
