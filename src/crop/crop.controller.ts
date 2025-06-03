@@ -14,11 +14,19 @@ import { UpdateCropDto } from './dto/update-crop.dto';
 
 @Controller('crops')
 export class CropsController {
-  constructor(private readonly service: CropsService) {}
+  constructor(private readonly service: CropsService) { }
+
 
   @Post()
   create(@Body() dto: CreateCropDto) {
     return this.service.create(dto);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() dto: UpdateCropDto) {
+    return this.service.update(id, dto);
   }
 
   @Get()
@@ -31,16 +39,9 @@ export class CropsController {
     return this.service.findOne(id);
   }
 
-  @Put(':id')
-  update(
-    @Param('id', new ParseUUIDPipe()) id: string,
-    @Body() dto: UpdateCropDto,
-  ) {
-    return this.service.update(id, dto);
-  }
-
   @Delete(':id')
   remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.service.remove(id);
   }
+
 }

@@ -16,7 +16,7 @@ import { UpdatePropertyDto } from './dto/update-property.dto';
 
 @Controller('properties')
 export class PropertiesController {
-  constructor(private readonly service: PropertiesService) {}
+  constructor(private readonly service: PropertiesService) { }
 
   @Post()
   create(@Body() dto: CreatePropertyDto) {

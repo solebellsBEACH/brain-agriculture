@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCropDto } from './dto/create-crop.dto';
@@ -10,7 +10,7 @@ export class CropsService {
   constructor(
     @InjectRepository(Crop)
     private repository: Repository<Crop>,
-  ) {}
+  ) { }
 
   create(dto: CreateCropDto) {
     const property = this.repository.create(dto);
@@ -28,7 +28,14 @@ export class CropsService {
   }
 
   async update(id: string, dto: UpdateCropDto) {
-    await this.findOne(id);
+    if (Object.keys(dto).length === 0) {
+      throw new BadRequestException('Nenhum dado fornecido para atualização.');
+    }
+    const property = await this.repository.findOneBy({ id });
+    if (!property) {
+      throw new NotFoundException('Crop not found');
+    }
+
     await this.repository.update(id, dto);
     return this.repository.findOneBy({ id });
   }
