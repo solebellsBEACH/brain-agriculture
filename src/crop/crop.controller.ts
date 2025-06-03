@@ -7,15 +7,13 @@ import {
   Put,
   Delete,
   ParseUUIDPipe,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { CreateCropDto } from './dto/create-crop.dto';
 import { CropsService } from './crops.service';
 import { UpdateCropDto } from './dto/update-crop.dto';
 
 
-@Controller('properties')
+@Controller('crops')
 export class CropsController {
   constructor(private readonly service: CropsService) { }
 
