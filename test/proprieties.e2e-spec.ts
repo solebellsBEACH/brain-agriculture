@@ -36,9 +36,6 @@ describe('Properties (e2e)', () => {
       .post('/properties')
       .send({
         name,
-        document: faker.number
-          .int({ min: 100000000000, max: 999999999999 })
-          .toString(),
         city: 'Ribeirão Preto',
         state: 'SP',
         total_area: 100,
@@ -56,7 +53,6 @@ describe('Properties (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/properties')
       .send({
-        name: faker.person.fullName(),
         city: 'Ribeirão Preto',
         state: 'SP',
         total_area: 100,
@@ -65,7 +61,7 @@ describe('Properties (e2e)', () => {
       })
       .expect(400);
 
-    expect((res.body?.message || [])[0]).toBe('document must be a string');
+    expect((res.body?.message || [])[0]).toBe('name must be a string');
   });
 
   it('POST /properties - should return wrong area message', async () => {
@@ -74,9 +70,6 @@ describe('Properties (e2e)', () => {
       .send({
         name: faker.person.fullName(),
         city: 'Ribeirão Preto',
-        document: faker.number
-          .int({ min: 100000000000, max: 999999999999 })
-          .toString(),
         state: 'SP',
         total_area: 10,
         arable_area: 2,
@@ -114,7 +107,6 @@ describe('Properties (e2e)', () => {
         name: 'Fazenda Atualizada',
         city: 'Campinas',
         state: 'SP',
-        document: '12345678900',
       })
       .expect(200);
 

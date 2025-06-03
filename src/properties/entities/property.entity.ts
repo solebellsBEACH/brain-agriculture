@@ -1,51 +1,41 @@
+import { Crop } from '../../crop/entities/crop.entity';
 import { Producer } from '../../producers/entities/producer.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 
-@Entity('properties')
+@Entity()
 export class Property {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string;
-
-  @Column()
-  document: string;
+  name: string; // Nome da fazenda
 
   @Column()
   city: string;
 
-  @Column()
+  @Column({ length: 2 })
   state: string;
 
-  @ManyToOne(() => Producer, (producer) => producer.properties)
+  @Column('float')
+  total_area: number;
+
+  @Column('float')
+  arable_area: number;
+
+  @Column('float')
+  vegetation_area: number;
+
+  @ManyToOne(() => Producer, (producer) => producer.properties, {
+    onDelete: 'CASCADE',
+  })
   producer: Producer;
 
-  @Column({ name: 'total_area', type: 'float', nullable: false, default: 0 })
-  total_area: number;
-
-  @Column({ name: 'arable_area', type: 'float', nullable: false, default: 0 })
-  arable_area: number;
-
-  @Column({
-    name: 'vegetation_area',
-    type: 'float',
-    nullable: false,
-    default: 0,
-  })
-  vegetation_area: number;
-
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
-}
-
-export interface IProperty {
-  id?: string;
-  name: string;
-  document: string;
-  city: string;
-  state: string;
-  total_area: number;
-  arable_area: number;
-  vegetation_area: number;
+  @OneToMany(() => Crop, (crop) => crop.property, { cascade: true })
+  crops: Crop[];
 }

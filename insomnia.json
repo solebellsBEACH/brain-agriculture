@@ -1,0 +1,184 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2025-06-03T12:00:00.000Z",
+    "__export_source": "insomnia.import",
+    "resources": [
+        {
+            "_id": "wrk_1",
+            "name": "API Agro (e2e)",
+            "_type": "workspace"
+        },
+        {
+            "_id": "env_1",
+            "_type": "environment",
+            "name": "Base Environment",
+            "parentId": "wrk_1",
+            "data": {
+                "base_url": "http://localhost:3000"
+            }
+        },
+        {
+            "_id": "fld_producers",
+            "_type": "request_group",
+            "name": "Producers",
+            "parentId": "wrk_1"
+        },
+        {
+            "_id": "fld_properties",
+            "_type": "request_group",
+            "name": "Properties",
+            "parentId": "wrk_1"
+        },
+        {
+            "_id": "fld_crops",
+            "_type": "request_group",
+            "name": "Crops",
+            "parentId": "wrk_1"
+        },
+        {
+            "_id": "req_create_producer",
+            "_type": "request",
+            "parentId": "fld_producers",
+            "name": "Create Producer",
+            "method": "POST",
+            "url": "{{ base_url }}/producers",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"name\": \"João da Silva\",\n  \"document\": \"123456789000\"\n}"
+            }
+        },
+        {
+            "_id": "req_get_all_producers",
+            "_type": "request",
+            "parentId": "fld_producers",
+            "name": "Get All Producers",
+            "method": "GET",
+            "url": "{{ base_url }}/producers"
+        },
+        {
+            "_id": "req_get_producer_by_id",
+            "_type": "request",
+            "parentId": "fld_producers",
+            "name": "Get Producer by ID",
+            "method": "GET",
+            "url": "{{ base_url }}/producers/{{ producer_id }}"
+        },
+        {
+            "_id": "req_update_producer",
+            "_type": "request",
+            "parentId": "fld_producers",
+            "name": "Update Producer",
+            "method": "PUT",
+            "url": "{{ base_url }}/producers/{{ producer_id }}",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"name\": \"João Atualizado\"\n}"
+            }
+        },
+        {
+            "_id": "req_delete_producer",
+            "_type": "request",
+            "parentId": "fld_producers",
+            "name": "Delete Producer",
+            "method": "DELETE",
+            "url": "{{ base_url }}/producers/{{ producer_id }}"
+        },
+        {
+            "_id": "req_create_property",
+            "_type": "request",
+            "parentId": "fld_properties",
+            "name": "Create Property",
+            "method": "POST",
+            "url": "{{ base_url }}/properties",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"name\": \"Fazenda Modelo\",\n  \"city\": \"Ribeirão Preto\",\n  \"state\": \"SP\",\n  \"total_area\": 100,\n  \"arable_area\": 20,\n  \"vegetation_area\": 50\n}"
+            }
+        },
+        {
+            "_id": "req_get_all_properties",
+            "_type": "request",
+            "parentId": "fld_properties",
+            "name": "Get All Properties",
+            "method": "GET",
+            "url": "{{ base_url }}/properties"
+        },
+        {
+            "_id": "req_get_property_by_id",
+            "_type": "request",
+            "parentId": "fld_properties",
+            "name": "Get Property by ID",
+            "method": "GET",
+            "url": "{{ base_url }}/properties/{{ property_id }}"
+        },
+        {
+            "_id": "req_update_property",
+            "_type": "request",
+            "parentId": "fld_properties",
+            "name": "Update Property",
+            "method": "PUT",
+            "url": "{{ base_url }}/properties/{{ property_id }}",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"name\": \"Fazenda Atualizada\",\n  \"city\": \"Campinas\",\n  \"state\": \"SP\"\n}"
+            }
+        },
+        {
+            "_id": "req_delete_property",
+            "_type": "request",
+            "parentId": "fld_properties",
+            "name": "Delete Property",
+            "method": "DELETE",
+            "url": "{{ base_url }}/properties/{{ property_id }}"
+        },
+        {
+            "_id": "req_create_crop",
+            "_type": "request",
+            "parentId": "fld_crops",
+            "name": "Create Crop",
+            "method": "POST",
+            "url": "{{ base_url }}/crops",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"name\": \"Mamão\",\n  \"harvest_year\": 2003,\n  \"propertyId\": \"{{ property_id }}\"\n}"
+            }
+        },
+        {
+            "_id": "req_get_all_crops",
+            "_type": "request",
+            "parentId": "fld_crops",
+            "name": "Get All Crops",
+            "method": "GET",
+            "url": "{{ base_url }}/crops"
+        },
+        {
+            "_id": "req_get_crop_by_id",
+            "_type": "request",
+            "parentId": "fld_crops",
+            "name": "Get Crop by ID",
+            "method": "GET",
+            "url": "{{ base_url }}/crops/{{ crop_id }}"
+        },
+        {
+            "_id": "req_update_crop",
+            "_type": "request",
+            "parentId": "fld_crops",
+            "name": "Update Crop",
+            "method": "PUT",
+            "url": "{{ base_url }}/crops/{{ crop_id }}",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"name\": \"Updated Soybean\",\n  \"harvest_year\": 2020\n}"
+            }
+        },
+        {
+            "_id": "req_delete_crop",
+            "_type": "request",
+            "parentId": "fld_crops",
+            "name": "Delete Crop",
+            "method": "DELETE",
+            "url": "{{ base_url }}/crops/{{ crop_id }}"
+        }
+    ]
+}
