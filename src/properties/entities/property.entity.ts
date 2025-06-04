@@ -7,28 +7,36 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Property {
   @PrimaryGeneratedColumn('uuid')
+  @ApiProperty({ example: 'uuid-property' })
   id: string;
 
   @Column()
-  name: string; // Nome da fazenda
+  @ApiProperty({ example: 'Fazenda Modelo' })
+  name: string;
 
   @Column()
+  @ApiProperty({ example: 'Ribeirão Preto' })
   city: string;
 
   @Column({ length: 2 })
+  @ApiProperty({ example: 'SP' })
   state: string;
 
   @Column('float')
+  @ApiProperty({ example: 100 })
   total_area: number;
 
   @Column('float')
+  @ApiProperty({ example: 60 })
   arable_area: number;
 
   @Column('float')
+  @ApiProperty({ example: 30 })
   vegetation_area: number;
 
   @ManyToOne(() => Producer, (producer) => producer.properties, {
