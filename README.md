@@ -1,73 +1,58 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## **O que você precisa desenvolver?**
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A proposta é criar uma aplicação para gerenciar o cadastro de produtores rurais, com os seguintes dados:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- CPF ou CNPJ
+- Nome do produtor
+- Nome da fazenda (propriedade)
+- Cidade
+- Estado
+- Área total da fazenda (em hectares)
+- Área agricultável (em hectares)
+- Área de vegetação (em hectares)
+- Safras (ex: Safra 2021, Safra 2022)
+- Culturas plantadas (ex.: Soja na Safra 2021, Milho na Safra 2021, Café na Safra 2022)
 
-## Description
+### **Requisitos de negócio**
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Permitir o cadastro, edição e exclusão de produtores rurais.
+2. Validar o CPF ou CNPJ fornecido pelo usuário.
+3. Garantir que a soma das áreas agricultável e de vegetação não ultrapasse a área total da fazenda.
+4. Permitir o registro de várias culturas plantadas por fazenda do produtor.
+5. Um produtor pode estar associado a 0, 1 ou mais propriedades rurais.
+6. Uma propriedade rural pode ter 0, 1 ou mais culturas plantadas por safra.
+7. Exibir um dashboard com:
+   - Total de fazendas cadastradas (quantidade).
+   - Total de hectares registrados (área total).
+   - Gráficos de pizza:
+     - Por estado.
+     - Por cultura plantada.
+     - Por uso do solo (área agricultável e vegetação).
 
-## Installation
+---
 
-```bash
-$ yarn install
-```
+## **Tecnologias sugeridas**
 
-## Running the app
+Sabemos que você pode ter seu próprio estilo, mas aqui estão algumas tecnologias e boas práticas que valorizamos:
 
-```bash
-# development
-$ yarn run start
+- **Conceitos**: SOLID, KISS, Clean Code, API Contracts, Testes, Arquitetura em camadas.
+- **Documentações**: Para facilitar o entendimento do funcionamento do sistema, é importante incluir um README claro, uma especificação OpenAPI e, caso necessário, diagramas que ajudem a visualizar a arquitetura ou os processos.
+- **Bônus**: Se conseguir disponibilizar a aplicação na nuvem e acessível via internet, será um diferencial!
 
-# watch mode
-$ yarn run start:dev
+### **Se você for desenvolvedor BACKEND:**
 
-# production mode
-$ yarn run start:prod
-```
+- Desenvolva uma **API REST**.
+- Utilize **Docker** para distribuir a aplicação.
+- Utilize **Postgres** como banco de dados.
+- Crie os endpoints necessários para atender os requisitos de negócio.
+- Desenvolva testes unitários e integrados.
+- Estruture dados "mockados" para testes.
+- Inclua logs para garantir a observabilidade do sistema, facilitando o monitoramento e a identificação de possíveis problemas.
+- Utilize um framework de ORM.
 
-## Test
+#### **Se você for desenvolvedor BACKEND Node:**
 
-```bash
-# unit tests
-$ yarn run test
+- Utilize **TypeScript**.
+- Utilize **NestJS** ou **AdonisJS**
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+**Nota final:** Queremos que você aproveite esse desafio para mostrar suas habilidades, mas também para aprender e se divertir. Se tiver dúvidas ou precisar de alguma orientação durante o processo, estamos aqui para ajudar! Boa sorte! 🌟
