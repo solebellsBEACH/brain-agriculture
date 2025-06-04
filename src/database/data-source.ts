@@ -1,14 +1,8 @@
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 import * as dotenv from 'dotenv';
-import { Property } from '../properties/entities/property.entity';
-import { Producer } from '../producers/entities/producer.entity';
-import { Crop } from '../crop/entities/crop.entity';
+import { getDbConfig } from './config';
 
 dotenv.config();
 
-export const AppDataSource = new DataSource({
-  type: 'postgres',
-  url: 'postgres://postgres:postgres@localhost:5432/mydatabase',
-  entities: [Property, Producer, Crop],
-});
+export const AppDataSource = new DataSource(getDbConfig() as DataSourceOptions);
