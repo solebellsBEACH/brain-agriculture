@@ -13,7 +13,7 @@ import { CreateProducerDto } from './dto/create-producer.dto';
 import { UpdateProducerDto } from './dto/update-producer.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-@ApiTags('producers')
+@ApiTags('Producers')
 @Controller('producers')
 export class ProducersController {
   constructor(private readonly service: ProducersService) { }

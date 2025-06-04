@@ -17,7 +17,6 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 export class CropsController {
   constructor(private readonly service: CropsService) { }
 
-
   @Post()
   @ApiOperation({ summary: 'Create a new crop' })
   @ApiResponse({ status: 201, description: 'Crop created successfully' })
