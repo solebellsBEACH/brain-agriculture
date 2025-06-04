@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateCropDto } from './dto/create-crop.dto';
 import { Crop } from './entities/crop.entity';
 import { UpdateCropDto } from './dto/update-crop.dto';
-import { Property } from 'src/properties/entities/property.entity';
+import { Property } from '../properties/entities/property.entity';
 
 @Injectable()
 export class CropsService {
@@ -18,8 +18,8 @@ export class CropsService {
   async create(dto: CreateCropDto) {
     const crop = this.repository.create(dto);
     const property = await this.propertyRepository.findOneBy({ id: dto.propertyId || '' })
-    if (!property?.id) throw new NotFoundException('Property not found');
-    return this.repository.save(crop);
+    if (property && crop) return this.repository.save(crop);
+    throw new NotFoundException('Property not found');
   }
 
   findAll() {

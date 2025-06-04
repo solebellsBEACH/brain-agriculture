@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Property } from 'src/properties/entities/property.entity';
+import { Property } from '../../properties/entities/property.entity';
 import { producersMock } from './producers.mock';
 
 const findProducerByName = (name: string) =>

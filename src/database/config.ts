@@ -5,6 +5,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 
 export enum NodeENV {
+    test = 'test',
     dev = 'development',
     prod = 'production'
 }
@@ -19,17 +20,16 @@ const dbConfig: TypeOrmModuleOptions = {
     entities: [Property, Producer, Crop],
 };
 export function getDbConfig() {
-    console.log(process.env.NODE_ENV, process.env.DATABASE_URL)
-    if (process.env.NODE_ENV === NodeENV.dev) {
+    if (process.env.NODE_ENV === NodeENV.prod) {
         return {
             ...dbConfig,
-            synchronize: true,
+            ssl: {
+                rejectUnauthorized: false,
+            }
         }
     }
     return {
         ...dbConfig,
-        ssl: {
-            rejectUnauthorized: false,
-        }
+        synchronize: true,
     }
 }
