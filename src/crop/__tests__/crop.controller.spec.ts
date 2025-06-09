@@ -38,6 +38,8 @@ describe('CropsController', () => {
       name: 'Soybean',
       harvest_year: 2025,
       propertyId: 'property-uuid',
+      utilization_percentage: 10.4,
+      value_per_unit: 40.5
     };
 
     service.create.mockResolvedValue(mockCrop);

@@ -10,7 +10,6 @@ import { CreateCropDto } from '../dto/create-crop.dto';
 import { UpdateCropDto } from '../dto/update-crop.dto';
 
 
-
 describe('CropsService', () => {
   let service: CropsService;
   let repo: jest.Mocked<Repository<Crop>>;
@@ -22,6 +21,8 @@ describe('CropsService', () => {
     name: 'Milho',
     harvest_year: 2023,
     propertyId: mockProperty.id,
+    utilization_percentage: 10.4,
+    value_per_unit: 40.5
   }
   const updateDto: UpdateCropDto = { name: 'Corn' };
 
