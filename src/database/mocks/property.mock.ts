@@ -2,125 +2,37 @@ import { faker } from '@faker-js/faker';
 import { Property } from '../../properties/entities/property.entity';
 import { producersMock } from './producers.mock';
 
-const findProducerByName = (name: string) =>
-  producersMock.find((p) => p.name === name)!;
-
-export const propertyMocks: Property[] = [
-  {
-    id: faker.string.uuid(),
-    name: 'Fazenda São João',
-    city: 'Ribeirão Preto',
-    state: 'SP',
-    total_area: 100,
-    arable_area: 70,
-    vegetation_area: 30,
-    has_irrigation: true,
-    machinery_count: 5,
-    crops: [],
-    producer: findProducerByName('João da Silva'),
-  },
-  {
-    id: faker.string.uuid(),
-    name: 'Sítio Boa Vista',
-    city: 'Uberlândia',
-    state: 'MG',
-    total_area: 85,
-    arable_area: 60,
-    vegetation_area: 25,
-    has_irrigation: false,
-    machinery_count: 3,
-    crops: [],
-    producer: findProducerByName('Fabio'),
-  },
-  {
-    id: faker.string.uuid(),
-    name: 'Chácara Esperança',
-    city: 'Londrina',
-    state: 'PR',
-    total_area: 50,
-    arable_area: 30,
-    vegetation_area: 20,
-    has_irrigation: true,
-    machinery_count: 2,
-    crops: [],
-    producer: findProducerByName('Silva'),
-  },
-  {
-    id: faker.string.uuid(),
-    name: 'Fazenda Santa Clara',
-    city: 'Juiz de Fora',
-    state: 'MG',
-    total_area: 120,
-    arable_area: 90,
-    vegetation_area: 30,
-    has_irrigation: false,
-    machinery_count: 4,
-    crops: [],
-    producer: findProducerByName('Pedro Raul'),
-  },
-  {
-    id: faker.string.uuid(),
-    name: 'Sítio Recanto Verde',
-    city: 'São José do Rio Preto',
-    state: 'SP',
-    total_area: 60,
-    arable_area: 40,
-    vegetation_area: 20,
-    has_irrigation: true,
-    machinery_count: 1,
-    crops: [],
-    producer: findProducerByName('João da Silva'),
-  },
-  {
-    id: faker.string.uuid(),
-    name: 'Fazenda Morro Alto',
-    city: 'Campo Grande',
-    state: 'MS',
-    total_area: 95,
-    arable_area: 70,
-    vegetation_area: 25,
-    has_irrigation: false,
-    machinery_count: 3,
-    crops: [],
-    producer: findProducerByName('Fabio'),
-  },
-  {
-    id: faker.string.uuid(),
-    name: 'Estância Bela Vista',
-    city: 'Pelotas',
-    state: 'RS',
-    total_area: 110,
-    arable_area: 80,
-    vegetation_area: 30,
-    has_irrigation: true,
-    machinery_count: 6,
-    crops: [],
-    producer: findProducerByName('Silva'),
-  },
-  {
-    id: faker.string.uuid(),
-    name: 'Sítio Vale Encantado',
-    city: 'Joinville',
-    state: 'SC',
-    total_area: 75,
-    arable_area: 50,
-    vegetation_area: 25,
-    has_irrigation: false,
-    machinery_count: 2,
-    crops: [],
-    producer: findProducerByName('Pedro Raul'),
-  },
-  {
-    id: faker.string.uuid(),
-    name: 'Fazenda Água Limpa',
-    city: 'Barreiras',
-    state: 'BA',
-    total_area: 130,
-    arable_area: 100,
-    vegetation_area: 30,
-    has_irrigation: true,
-    machinery_count: 7,
-    crops: [],
-    producer: findProducerByName('João da Silva'),
-  },
+const states = ['SP', 'MG', 'PR', 'RS', 'SC', 'BA', 'MS', 'MT', 'GO'];
+const cities = [
+  'São Paulo', 'Belo Horizonte', 'Curitiba', 'Porto Alegre',
+  'Florianópolis', 'Salvador', 'Campo Grande', 'Cuiabá', 'Goiânia',
+  'Ribeirão Preto', 'Uberlândia', 'Londrina', 'Juiz de Fora',
+  'São José do Rio Preto', 'Pelotas', 'Joinville', 'Barreiras'
 ];
+
+
+function getRandomProducer() {
+  return producersMock[Math.floor(Math.random() * producersMock.length)] || null;
+}
+
+function generateProperty(index: number): Property {
+  const producer = getRandomProducer();
+
+  return {
+    id: faker.string.uuid(),
+    name: `${faker.company.name()} Farm #${index + 1}`,
+    city: cities[Math.floor(Math.random() * cities.length)],
+    state: states[Math.floor(Math.random() * states.length)],
+    total_area: faker.number.int({ min: 20, max: 200 }),
+    arable_area: faker.number.int({ min: 10, max: 150 }),
+    vegetation_area: faker.number.int({ min: 5, max: 50 }),
+    has_irrigation: faker.datatype.boolean(),
+    machinery_count: faker.number.int({ min: 0, max: 10 }),
+    crops: [],
+    producer,
+  };
+}
+
+export const propertyMocks: Property[] = Array.from({ length: 50 }, (_, i) =>
+  generateProperty(i)
+);

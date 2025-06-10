@@ -10,15 +10,27 @@ export class ProducersService {
   constructor(
     @InjectRepository(Producer)
     private repository: Repository<Producer>,
-  ) {}
+  ) { }
 
   create(dto: CreateProducerDto) {
     const producer = this.repository.create(dto);
     return this.repository.save(producer);
   }
 
-  findAll() {
-    return this.repository.find({ relations: ['properties'] });
+  async findAll(page = 1, limit = 10) {
+    const skip = (page - 1) * limit;
+    const [data, total] = await this.repository.findAndCount({
+      relations: ['properties'],
+      skip,
+      take: limit,
+    });
+
+    return {
+      data,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: string) {

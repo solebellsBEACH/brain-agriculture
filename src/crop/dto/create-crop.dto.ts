@@ -18,6 +18,10 @@ export class CreateCropDto {
   @ApiProperty({ example: 10.3 })
   utilization_percentage: number;
 
+  @IsNumber()
+  @ApiProperty({ example: 10.3 })
+  value_growth: number;
+
   @IsOptional()
   @IsNumber()
   @ApiProperty({ example: 3.2, required: false })

@@ -28,6 +28,10 @@ export class Crop {
   @ApiProperty({ example: 3.2 })
   expected_yield: number;
 
+  @Column({ type: 'float', default: 0 })
+  @ApiProperty({ example: 10.3 })
+  value_growth: number;
+
   @ManyToOne(() => Property, (property) => property.crops, {
     onDelete: 'CASCADE',
   })

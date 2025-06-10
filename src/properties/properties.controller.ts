@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   HttpException,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { PropertiesService } from './properties.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
@@ -37,11 +38,13 @@ export class PropertiesController {
     }
     return this.service.create(dto);
   }
-
   @Get()
-  @ApiOperation({ summary: 'List all properties' })
-  findAll() {
-    return this.service.findAll();
+  @ApiOperation({ summary: 'List all properties with pagination' })
+  findAll(
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
+  ) {
+    return this.service.findAll(Number(page), Number(limit));
   }
 
   @Get(':id')

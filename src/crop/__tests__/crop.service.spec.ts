@@ -22,7 +22,8 @@ describe('CropsService', () => {
     harvest_year: 2023,
     propertyId: mockProperty.id,
     utilization_percentage: 10.4,
-    value_per_unit: 40.5
+    value_per_unit: 40.5,
+    value_growth: 10.354
   }
   const updateDto: UpdateCropDto = { name: 'Corn' };
 

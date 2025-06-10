@@ -12,6 +12,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 80.5,
     utilization_percentage: 90.2,
     expected_yield: 3.5,
+    value_growth: 10.354,
     property: findPropertyByName('Fazenda São João'),
   },
   {
@@ -21,6 +22,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 110.75,
     utilization_percentage: 85.6,
     expected_yield: 2.9,
+    value_growth: -2.354,
     property: findPropertyByName('Sítio Boa Vista'),
   },
   {
@@ -30,6 +32,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 95.3,
     utilization_percentage: 78.4,
     expected_yield: 2.4,
+    value_growth: 10.354,
     property: findPropertyByName('Chácara Esperança'),
   },
   {
@@ -39,6 +42,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 60.2,
     utilization_percentage: 92.1,
     expected_yield: 1.8,
+    value_growth: 10.354,
     property: findPropertyByName('Fazenda Santa Clara'),
   },
   {
@@ -48,6 +52,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 45.0,
     utilization_percentage: 88.0,
     expected_yield: 4.1,
+    value_growth: 10.354,
     property: findPropertyByName('Sítio Recanto Verde'),
   },
   {
@@ -57,6 +62,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 150.0,
     utilization_percentage: 70.0,
     expected_yield: 1.3,
+    value_growth: 10.354,
     property: findPropertyByName('Fazenda Morro Alto'),
   },
   {
@@ -66,6 +72,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 72.9,
     utilization_percentage: 80.5,
     expected_yield: 2.7,
+    value_growth: 10.354,
     property: findPropertyByName('Estância Bela Vista'),
   },
   {
@@ -75,6 +82,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 55.4,
     utilization_percentage: 86.3,
     expected_yield: 3.1,
+    value_growth: 10.354,
     property: findPropertyByName('Sítio Vale Encantado'),
   },
   {
@@ -84,6 +92,7 @@ export const cropsMock: Crop[] = [
     value_per_unit: 97.0,
     utilization_percentage: 75.0,
     expected_yield: 2.2,
+    value_growth: 10.354,
     property: findPropertyByName('Fazenda Água Limpa'),
   },
 ];
