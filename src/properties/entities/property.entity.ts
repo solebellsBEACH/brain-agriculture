@@ -39,6 +39,14 @@ export class Property {
   @ApiProperty({ example: 30 })
   vegetation_area: number;
 
+  @Column({ type: 'boolean', default: false })
+  @ApiProperty({ example: true })
+  has_irrigation: boolean;
+
+  @Column({ type: 'float', nullable: true })
+  @ApiProperty({ example: 200 })
+  machinery_count: number;
+
   @ManyToOne(() => Producer, (producer) => producer.properties, {
     onDelete: 'CASCADE',
   })

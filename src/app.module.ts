@@ -7,7 +7,6 @@ import { ProducersModule } from './producers/producers.module';
 import { CropModule } from './crop/crop.module';
 import { getDbConfig } from './database/config';
 
-
 @Module({
   imports: [
     TypeOrmModule.forRoot(getDbConfig() as TypeOrmModuleOptions),
@@ -18,4 +17,4 @@ import { getDbConfig } from './database/config';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

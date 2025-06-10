@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCropDto } from './dto/create-crop.dto';
@@ -13,17 +17,31 @@ export class CropsService {
     private repository: Repository<Crop>,
     @InjectRepository(Property)
     private readonly propertyRepository: Repository<Property>,
-  ) { }
+  ) {}
 
   async create(dto: CreateCropDto) {
     const crop = this.repository.create(dto);
-    const property = await this.propertyRepository.findOneBy({ id: dto.propertyId || '' })
+    const property = await this.propertyRepository.findOneBy({
+      id: dto.propertyId || '',
+    });
     if (property && crop) return this.repository.save(crop);
     throw new NotFoundException('Property not found');
   }
 
-  findAll() {
-    return this.repository.find();
+  async findAll(page = 1, limit = 10) {
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await this.repository.findAndCount({
+      skip,
+      take: limit,
+    });
+
+    return {
+      data,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: string) {
