@@ -19,14 +19,14 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 @ApiTags('Properties')
 @Controller('properties')
 export class PropertiesController {
-  constructor(private readonly service: PropertiesService) { }
+  constructor(private readonly service: PropertiesService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new property' })
   @ApiResponse({ status: 201, description: 'Property created' })
   create(@Body() dto: CreatePropertyDto) {
     const { total_area, vegetation_area, arable_area } = dto;
-    if ((arable_area + vegetation_area) > total_area) {
+    if (arable_area + vegetation_area > total_area) {
       throw new HttpException(
         {
           status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -40,10 +40,7 @@ export class PropertiesController {
   }
   @Get()
   @ApiOperation({ summary: 'List all properties with pagination' })
-  findAll(
-    @Query('page') page = 1,
-    @Query('limit') limit = 10,
-  ) {
+  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
     return this.service.findAll(Number(page), Number(limit));
   }
 

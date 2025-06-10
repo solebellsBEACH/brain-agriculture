@@ -17,7 +17,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 @ApiTags('Producers')
 @Controller('producers')
 export class ProducersController {
-  constructor(private readonly service: ProducersService) { }
+  constructor(private readonly service: ProducersService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new producer' })
@@ -28,10 +28,7 @@ export class ProducersController {
 
   @Get()
   @ApiOperation({ summary: 'List all producers with pagination' })
-  findAll(
-    @Query('page') page = 1,
-    @Query('limit') limit = 10,
-  ) {
+  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
     return this.service.findAll(Number(page), Number(limit));
   }
 

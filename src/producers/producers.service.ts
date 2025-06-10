@@ -10,7 +10,7 @@ export class ProducersService {
   constructor(
     @InjectRepository(Producer)
     private repository: Repository<Producer>,
-  ) { }
+  ) {}
 
   create(dto: CreateProducerDto) {
     const producer = this.repository.create(dto);

@@ -19,7 +19,7 @@ describe('PropertiesController', () => {
     arable_area: 2,
     vegetation_area: 80,
     has_irrigation: false,
-    producerId: mocks.producersMock[0].id
+    producerId: mocks.producersMock[0].id,
   };
 
   const updateDto = {

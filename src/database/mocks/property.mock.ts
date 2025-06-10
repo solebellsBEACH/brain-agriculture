@@ -4,14 +4,29 @@ import { producersMock } from './producers.mock';
 
 const states = ['SP', 'MG', 'PR', 'RS', 'SC', 'BA', 'MS', 'MT', 'GO'];
 const cities = [
-  'São Paulo', 'Belo Horizonte', 'Curitiba', 'Porto Alegre',
-  'Florianópolis', 'Salvador', 'Campo Grande', 'Cuiabá', 'Goiânia',
-  'Ribeirão Preto', 'Uberlândia', 'Londrina', 'Juiz de Fora',
-  'São José do Rio Preto', 'Pelotas', 'Joinville', 'Barreiras'
+  'São Paulo',
+  'Belo Horizonte',
+  'Curitiba',
+  'Porto Alegre',
+  'Florianópolis',
+  'Salvador',
+  'Campo Grande',
+  'Cuiabá',
+  'Goiânia',
+  'Ribeirão Preto',
+  'Uberlândia',
+  'Londrina',
+  'Juiz de Fora',
+  'São José do Rio Preto',
+  'Pelotas',
+  'Joinville',
+  'Barreiras',
 ];
 
 function getRandomProducer() {
-  return producersMock[Math.floor(Math.random() * producersMock.length)] || null;
+  return (
+    producersMock[Math.floor(Math.random() * producersMock.length)] || null
+  );
 }
 
 function generateProperty(index: number): Property {
@@ -33,7 +48,7 @@ function generateProperty(index: number): Property {
 }
 
 const propertyData: Property[] = Array.from({ length: 50 }, (_, i) =>
-  generateProperty(i)
+  generateProperty(i),
 );
 
 export const propertyMocks = {

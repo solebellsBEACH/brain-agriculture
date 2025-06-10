@@ -2,11 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CropsController } from '../crop.controller';
 import { CropsService } from '../crops.service';
 import { CreateCropDto } from '../dto/create-crop.dto';
-import { Crop } from '../entities/crop.entity';
 import { UpdateCropDto } from '../dto/update-crop.dto';
 import { mocks } from '../../database/mocks';
 
-const mockCrop = mocks.cropsMock.findAll()
+const mockCrop = mocks.cropsMock.findAll();
 
 describe('CropsController', () => {
   let controller: CropsController;
@@ -24,7 +23,7 @@ describe('CropsController', () => {
             findOne: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
-            findAndCount: jest.fn().mockImplementation(() => [[], 10])
+            findAndCount: jest.fn().mockImplementation(() => [[], 10]),
           },
         },
       ],
@@ -41,7 +40,7 @@ describe('CropsController', () => {
       propertyId: 'property-uuid',
       utilization_percentage: 10.4,
       value_per_unit: 40.5,
-      value_growth: 10.354
+      value_growth: 10.354,
     };
 
     service.create.mockResolvedValue(mockCrop.data[0]);
@@ -56,7 +55,7 @@ describe('CropsController', () => {
       utilization_percentage: 90.2,
       expected_yield: 3.5,
       value_growth: 10.354,
-      property: undefined
+      property: undefined,
     });
   });
 

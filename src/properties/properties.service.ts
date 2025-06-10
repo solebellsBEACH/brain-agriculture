@@ -10,7 +10,7 @@ export class PropertiesService {
   constructor(
     @InjectRepository(Property)
     private repository: Repository<Property>,
-  ) { }
+  ) {}
 
   create(dto: CreatePropertyDto) {
     const property = this.repository.create(dto);

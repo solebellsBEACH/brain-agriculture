@@ -1,6 +1,12 @@
-
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, Length, IsBoolean, IsOptional, IsUUID, } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  Length,
+  IsBoolean,
+  IsOptional,
+  IsUUID,
+} from 'class-validator';
 
 export class CreatePropertyDto {
   @IsString()
@@ -40,5 +46,4 @@ export class CreatePropertyDto {
   @IsUUID()
   @ApiProperty({ example: 'uuid-produtor' })
   producerId: string;
-
 }

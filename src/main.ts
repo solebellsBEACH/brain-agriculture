@@ -11,7 +11,6 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
-
   const config = new DocumentBuilder()
     .setTitle('Brain Agriculture API')
     .setDescription('Cadastro de produtores, propriedades e culturas')

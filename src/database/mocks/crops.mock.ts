@@ -109,5 +109,5 @@ export const cropsMock = {
       page,
       lastPage: Math.ceil(total / limit),
     };
-  }
+  },
 };
