@@ -6,7 +6,7 @@ import { Crop } from '../entities/crop.entity';
 import { UpdateCropDto } from '../dto/update-crop.dto';
 import { mocks } from '../../database/mocks';
 
-const mockCrop: Crop = mocks.cropsMock[0];
+const mockCrop = mocks.cropsMock.findAll()
 
 describe('CropsController', () => {
   let controller: CropsController;
@@ -24,6 +24,7 @@ describe('CropsController', () => {
             findOne: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
+            findAndCount: jest.fn().mockImplementation(() => [[], 10])
           },
         },
       ],
@@ -43,32 +44,41 @@ describe('CropsController', () => {
       value_growth: 10.354
     };
 
-    service.create.mockResolvedValue(mockCrop);
+    service.create.mockResolvedValue(mockCrop.data[0]);
 
     const result = await controller.create(dto);
     expect(service.create).toHaveBeenCalledWith(dto);
-    expect(result).toEqual(mockCrop);
+    expect(result).toEqual({
+      id: '4f1a33f1-f4d9-40eb-8408-7c7627772f49',
+      name: 'Milho',
+      harvest_year: 2023,
+      value_per_unit: 80.5,
+      utilization_percentage: 90.2,
+      expected_yield: 3.5,
+      value_growth: 10.354,
+      property: undefined
+    });
   });
 
   it('should return all crops', async () => {
-    service.findAll.mockResolvedValue([mockCrop]);
+    service.findAll.mockResolvedValue(mockCrop);
 
     const result = await controller.findAll();
     expect(service.findAll).toHaveBeenCalled();
-    expect(result).toEqual([mockCrop]);
+    expect(result).toEqual(mockCrop);
   });
 
   it('should return a single crop by ID', async () => {
-    service.findOne.mockResolvedValue(mockCrop);
+    service.findOne.mockResolvedValue(mockCrop.data[0]);
 
     const result = await controller.findOne('crop-uuid');
     expect(service.findOne).toHaveBeenCalledWith('crop-uuid');
-    expect(result).toEqual(mockCrop);
+    expect(result).toEqual(mockCrop.data[0]);
   });
 
   it('should update a crop', async () => {
     const updateDto: UpdateCropDto = { name: 'Corn' };
-    const updatedCrop = { ...mockCrop, ...updateDto };
+    const updatedCrop = { ...mockCrop.data[0], ...updateDto };
 
     service.update.mockResolvedValue(updatedCrop);
 

@@ -2,9 +2,9 @@ import { propertyMocks } from './property.mock';
 import { Crop } from '../../crop/entities/crop.entity';
 
 const findPropertyByName = (name: string) =>
-  propertyMocks.find((p) => p.name === name)!;
+  propertyMocks.findAll().data.find((p) => p.name === name)!;
 
-export const cropsMock: Crop[] = [
+const cropData: Crop[] = [
   {
     id: '4f1a33f1-f4d9-40eb-8408-7c7627772f49',
     name: 'Milho',
@@ -96,3 +96,18 @@ export const cropsMock: Crop[] = [
     property: findPropertyByName('Fazenda Água Limpa'),
   },
 ];
+
+export const cropsMock = {
+  findAll(page = 1, limit = 10) {
+    const skip = (page - 1) * limit;
+    const data = cropData.slice(skip, skip + limit);
+    const total = cropData.length;
+
+    return {
+      data,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
+  }
+};

@@ -10,7 +10,6 @@ const cities = [
   'São José do Rio Preto', 'Pelotas', 'Joinville', 'Barreiras'
 ];
 
-
 function getRandomProducer() {
   return producersMock[Math.floor(Math.random() * producersMock.length)] || null;
 }
@@ -33,6 +32,21 @@ function generateProperty(index: number): Property {
   };
 }
 
-export const propertyMocks: Property[] = Array.from({ length: 50 }, (_, i) =>
+const propertyData: Property[] = Array.from({ length: 50 }, (_, i) =>
   generateProperty(i)
 );
+
+export const propertyMocks = {
+  findAll(page = 1, limit = 10) {
+    const skip = (page - 1) * limit;
+    const data = propertyData.slice(skip, skip + limit);
+    const total = propertyData.length;
+
+    return {
+      data,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
+  },
+};
