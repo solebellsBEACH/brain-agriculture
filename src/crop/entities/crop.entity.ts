@@ -16,6 +16,22 @@ export class Crop {
   @ApiProperty({ example: 2024 })
   harvest_year: number;
 
+  @Column({ type: 'float', default: 0 })
+  @ApiProperty({ example: 100.5 })
+  value_per_unit: number;
+
+  @Column({ type: 'float', default: 0 })
+  @ApiProperty({ example: 10.3 })
+  utilization_percentage: number;
+
+  @Column({ type: 'float', nullable: true })
+  @ApiProperty({ example: 3.2 })
+  expected_yield: number;
+
+  @Column({ type: 'float', default: 0 })
+  @ApiProperty({ example: 10.3 })
+  value_growth: number;
+
   @ManyToOne(() => Property, (property) => property.crops, {
     onDelete: 'CASCADE',
   })

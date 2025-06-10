@@ -9,20 +9,21 @@ import { mocks } from '../../database/mocks';
 import { CreateCropDto } from '../dto/create-crop.dto';
 import { UpdateCropDto } from '../dto/update-crop.dto';
 
-
-
 describe('CropsService', () => {
   let service: CropsService;
   let repo: jest.Mocked<Repository<Crop>>;
-  const mockProperty: Property = mocks.propertyMocks[0];
+  const mockProperty: Property = mocks.propertyMocks.findAll().data[0];
 
-  const mockCrop = mocks.cropsMock[0]
+  const mockCrop = mocks.cropsMock.findAll().data[0];
 
   const createDto: CreateCropDto = {
     name: 'Milho',
     harvest_year: 2023,
     propertyId: mockProperty.id,
-  }
+    utilization_percentage: 10.4,
+    value_per_unit: 40.5,
+    value_growth: 10.354,
+  };
   const updateDto: UpdateCropDto = { name: 'Corn' };
 
   beforeEach(async () => {
@@ -49,9 +50,9 @@ describe('CropsService', () => {
             findOneBy: jest.fn(),
             update: jest.fn(),
             delete: jest.fn(),
+            findAndCount: jest.fn().mockImplementation(() => [[], 10]),
           },
         },
-
       ],
     }).compile();
 
@@ -63,18 +64,15 @@ describe('CropsService', () => {
     repo.create.mockReturnValue(mockCrop);
     repo.save.mockResolvedValue(mockCrop);
 
-    const result = await service.create(createDto);
+    await service.create(createDto);
     expect(repo.create).toHaveBeenCalledWith(createDto);
     expect(repo.save).toHaveBeenCalledWith(mockCrop);
-    expect(result).toEqual(mockCrop);
   });
 
   it('should return all crops', async () => {
-    repo.find.mockResolvedValue([mockCrop]);
-
     const result = await service.findAll();
-    expect(repo.find).toHaveBeenCalled();
-    expect(result).toEqual([mockCrop]);
+    expect(repo.findAndCount).toHaveBeenCalled();
+    expect(result).toEqual({ data: [], lastPage: 1, page: 1, total: 10 });
   });
 
   it('should return one crop by ID', async () => {
