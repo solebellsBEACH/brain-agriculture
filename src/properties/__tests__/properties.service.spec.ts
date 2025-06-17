@@ -2,30 +2,52 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
-import { Property } from '../entities/property.entity';
 import { PropertiesService } from '../properties.service';
+import { Property } from '../entities/property.entity';
+import { Producer } from 'src/producers/entities/producer.entity';
 import { CreatePropertyDto } from '../dto/create-property.dto';
-import { mocks } from '../../database/mocks';
+import { UpdatePropertyDto } from '../dto/update-property.dto';
+
 
 describe('PropertiesService', () => {
   let service: PropertiesService;
   let repository: jest.Mocked<Repository<Property>>;
 
-  const mockProperty: Property = mocks.propertyMocks[0];
+  const mockProducer: Producer = {
+    id: 'producer-1',
+    name: 'Produtor Exemplo',
+    document: '12345678900',
+    properties: [],
+  };
+
+  const mockProperty: Property = {
+    id: 'uuid-123',
+    name: 'Fazenda Exemplo',
+    city: 'Bauru',
+    state: 'SP',
+    total_area: 100,
+    arable_area: 50,
+    vegetation_area: 30,
+    has_irrigation: false,
+    machinery_count: 10,
+    producer: mockProducer,
+    crops: [],
+  };
 
   const createDto: CreatePropertyDto = {
     name: 'Fazenda Teste',
     city: 'Bauru',
     state: 'SP',
     total_area: 100,
-    arable_area: 2,
-    vegetation_area: 80,
+    arable_area: 50,
+    vegetation_area: 30,
     has_irrigation: false,
-    producerId: mocks.producersMock[0].id,
+    machinery_count: 5,
+    producerId: mockProducer.id,
   };
 
-  const updateDto = {
-    name: 'Nova Fazenda',
+  const updateDto: UpdatePropertyDto = {
+    name: 'Fazenda Atualizada',
     city: 'Campinas',
   };
 
@@ -36,11 +58,14 @@ describe('PropertiesService', () => {
         {
           provide: getRepositoryToken(Property),
           useValue: {
-            create: jest.fn().mockImplementation((dto) => ({ ...dto })),
-            save: jest
-              .fn()
-              .mockImplementation((dto) => ({ id: 'uuid-123', ...dto })),
-            find: jest.fn().mockResolvedValue([mockProperty]),
+            create: jest.fn().mockImplementation(dto => ({ ...dto })),
+            save: jest.fn().mockImplementation(dto => ({
+              id: 'uuid-123',
+              ...dto,
+              producer: mockProducer,
+              crops: [],
+            })),
+            findAndCount: jest.fn().mockResolvedValue([[mockProperty], 1]),
             findOneBy: jest.fn().mockResolvedValue(mockProperty),
             update: jest.fn().mockResolvedValue(undefined),
             delete: jest.fn().mockResolvedValue(undefined),
@@ -56,36 +81,45 @@ describe('PropertiesService', () => {
   it('should create a property', async () => {
     const result = await service.create(createDto);
     expect(repository.create).toHaveBeenCalledWith(createDto);
-    expect(repository.save).toHaveBeenCalledWith({ ...createDto });
-    expect(result).toEqual(expect.objectContaining(createDto));
+    expect(repository.save).toHaveBeenCalled();
+    expect(result).toMatchObject({
+      ...createDto,
+      id: 'uuid-123',
+    });
   });
 
-  it.skip('should return all properties', async () => {
-    const result = await service.findAll();
-    expect(repository.find).toHaveBeenCalled();
-    expect(result).toEqual([mockProperty]);
+  it('should return all properties with pagination', async () => {
+    const result = await service.findAll(1, 10);
+    expect(repository.findAndCount).toHaveBeenCalledWith({ skip: 0, take: 10 });
+    expect(result).toEqual({
+      data: [mockProperty],
+      total: 1,
+      page: 1,
+      lastPage: 1,
+    });
   });
 
-  it.skip('should return one property by id', async () => {
+  it('should return one property by id', async () => {
+    repository.findOneBy.mockResolvedValue(mockProperty);
     const result = await service.findOne('uuid-123');
     expect(repository.findOneBy).toHaveBeenCalledWith({ id: 'uuid-123' });
     expect(result).toEqual(mockProperty);
   });
 
-  it('should throw NotFoundException if property does not exist', async () => {
+  it('should throw NotFoundException when property not found', async () => {
     repository.findOneBy.mockResolvedValueOnce(null);
-    await expect(service.findOne('invalid-id')).rejects.toThrow(
-      NotFoundException,
-    );
+    await expect(service.findOne('not-exist')).rejects.toThrow(NotFoundException);
   });
 
-  it.skip('should update a property', async () => {
+  it('should update a property', async () => {
+    repository.findOneBy.mockResolvedValue(mockProperty);
     const result = await service.update('uuid-123', updateDto);
     expect(repository.update).toHaveBeenCalledWith('uuid-123', updateDto);
     expect(result).toEqual(mockProperty);
   });
 
-  it.skip('should delete a property', async () => {
+  it('should delete a property', async () => {
+    repository.findOneBy.mockResolvedValue(mockProperty);
     const result = await service.remove('uuid-123');
     expect(repository.delete).toHaveBeenCalledWith('uuid-123');
     expect(result).toEqual({ message: 'Deleted successfully' });
