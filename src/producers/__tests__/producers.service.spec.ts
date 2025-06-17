@@ -5,13 +5,14 @@ import { NotFoundException } from '@nestjs/common';
 import { ProducersService } from '../producers.service';
 import { Producer } from '../entities/producer.entity';
 import { CreateProducerDto } from '../dto/create-producer.dto';
+import { UpdateProducerDto } from '../dto/update-producer.dto';
 
 describe('ProducersService', () => {
   let service: ProducersService;
   let repository: jest.Mocked<Repository<Producer>>;
 
   const mockProducer: Producer = {
-    id: 'c1f4e6d2-45f9-4b6f-b4c3-f54452d8e1d73bb0a',
+    id: 'uuid-produtor',
     name: 'João da Silva',
     document: '12345678900',
     properties: [],
@@ -22,7 +23,7 @@ describe('ProducersService', () => {
     document: '12345678900',
   };
 
-  const updateDto = {
+  const updateDto: UpdateProducerDto = {
     name: 'Mario da Silva Edited',
   };
 
@@ -36,10 +37,13 @@ describe('ProducersService', () => {
             create: jest.fn().mockImplementation((dto) => ({ ...dto })),
             save: jest
               .fn()
-              .mockImplementation((dto) => ({ id: 'uuid-123', ...dto })),
+              .mockImplementation((dto) => ({ id: 'uuid-produtor', ...dto })),
             find: jest.fn().mockResolvedValue([mockProducer]),
             findOneBy: jest.fn().mockResolvedValue(mockProducer),
             findOne: jest.fn().mockResolvedValue(mockProducer),
+            findAndCount: jest
+              .fn()
+              .mockResolvedValue([[mockProducer], 1]),
             update: jest.fn().mockResolvedValue(undefined),
             delete: jest.fn().mockResolvedValue(undefined),
           },
@@ -58,15 +62,27 @@ describe('ProducersService', () => {
     expect(result).toEqual(expect.objectContaining(createDto));
   });
 
-  it.skip('should return all producers', async () => {
+  it('should return all producers', async () => {
     const result = await service.findAll();
-    expect(repository.find).toHaveBeenCalled();
-    expect(result).toEqual([mockProducer]);
+    expect(repository.findAndCount).toHaveBeenCalledWith({
+      relations: ['properties'],
+      skip: 0,
+      take: 10,
+    });
+    expect(result).toEqual({
+      data: [mockProducer],
+      total: 1,
+      page: 1,
+      lastPage: 1,
+    });
   });
 
   it('should return one producer by id', async () => {
-    const result = await service.findOne('uuid-123');
-    expect(repository.findOne).toHaveBeenCalled();
+    const result = await service.findOne('uuid-produtor');
+    expect(repository.findOne).toHaveBeenCalledWith({
+      where: { id: 'uuid-produtor' },
+      relations: ['properties'],
+    });
     expect(result).toEqual(mockProducer);
   });
 
@@ -78,14 +94,14 @@ describe('ProducersService', () => {
   });
 
   it('should update a producer', async () => {
-    const result = await service.update('uuid-123', updateDto);
-    expect(repository.update).toHaveBeenCalledWith('uuid-123', updateDto);
+    const result = await service.update('uuid-produtor', updateDto);
+    expect(repository.update).toHaveBeenCalledWith('uuid-produtor', updateDto);
     expect(result).toEqual(mockProducer);
   });
 
   it('should delete a producer', async () => {
-    const result = await service.remove('uuid-123');
-    expect(repository.delete).toHaveBeenCalledWith('uuid-123');
+    const result = await service.remove('uuid-produtor');
+    expect(repository.delete).toHaveBeenCalledWith('uuid-produtor');
     expect(result).toEqual({ message: 'Deleted successfully' });
   });
 });

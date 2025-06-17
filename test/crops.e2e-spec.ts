@@ -36,11 +36,19 @@ describe('CropsController (e2e)', () => {
     await app.close();
   });
 
-  it.skip('should create a crop (POST /crops)', async () => {
+  it('should create a crop (POST /crops)', async () => {
+
+    const responseProperty = await request(app.getHttpServer())
+        .get('/properties')
+
     const crop: CreateCropDto = {
       name: 'Mamão',
       harvest_year: 2003,
-      propertyId: mocks.propertyMocks[0].id,
+      propertyId: responseProperty.body.data[0].id,
+      utilization_percentage:10.3,
+      value_growth:3,
+      value_per_unit:20.5,
+      expected_yield:39
     };
 
     const response = await request(httpServer)
@@ -48,19 +56,19 @@ describe('CropsController (e2e)', () => {
       .send(crop)
       .expect(201);
 
-    expect(response.body).toHaveProperty('id');
-    expect(response.body.name).toBe(crop.name);
+      expect(response.body).toHaveProperty('id');
+      expect(response.body.name).toBe(crop.name);
 
-    createdCropId = response.body.id;
+      createdCropId = response.body.id;
   });
 
-  it.skip('should retrieve all crops (GET /crops)', async () => {
+  it('should retrieve all crops (GET /crops)', async () => {
     const response = await request(httpServer).get('/crops').expect(200);
 
-    expect(Array.isArray(response.body)).toBe(true);
+    expect(Array.isArray(response.body.data)).toBe(true);
   });
 
-  it.skip('should retrieve a crop by ID (GET /crops/:id)', async () => {
+  it('should retrieve a crop by ID (GET /crops/:id)', async () => {
     const response = await request(httpServer)
       .get(`/crops/${createdCropId}`)
       .expect(200);
@@ -68,7 +76,7 @@ describe('CropsController (e2e)', () => {
     expect(response.body).toHaveProperty('id', createdCropId);
   });
 
-  it.skip('should update a crop (PUT /crops/:id)', async () => {
+  it('should update a crop (PUT /crops/:id)', async () => {
     const updateData: UpdateCropDto = {
       name: 'Updated Soybean',
       harvest_year: 2020,
@@ -82,11 +90,11 @@ describe('CropsController (e2e)', () => {
     expect(response.body.name).toBe(updateData.name);
   });
 
-  it.skip('should delete a crop (DELETE /crops/:id)', async () => {
+  it('should delete a crop (DELETE /crops/:id)', async () => {
     await request(httpServer).delete(`/crops/${createdCropId}`).expect(200);
   });
 
-  it.skip('should return 404 for a non-existent crop (GET /crops/:id)', async () => {
+  it('should return 404 for a non-existent crop (GET /crops/:id)', async () => {
     await request(httpServer).get(`/crops/${createdCropId}`).expect(404);
   });
 });
