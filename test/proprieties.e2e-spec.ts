@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { DataSource } from 'typeorm';
 import { faker } from '@faker-js/faker/.';
+import { CreatePropertyDto } from 'src/properties/dto/create-property.dto';
 
 describe('Properties (e2e)', () => {
   let app: INestApplication;
@@ -31,17 +32,24 @@ describe('Properties (e2e)', () => {
   });
 
   it('POST /properties - should create a property', async () => {
+    const resProducers = await request(app.getHttpServer())
+          .get('/producers')
     name = faker.person.fullName();
-    const res = await request(app.getHttpServer())
-      .post('/properties')
-      .send({
+
+    const payload: CreatePropertyDto = {
         name,
         city: 'Ribeirão Preto',
         state: 'SP',
         total_area: 100,
         arable_area: 2,
         vegetation_area: 80,
-      })
+        has_irrigation:true,
+        machinery_count:3,
+        producerId:resProducers.body.data[0].id
+      }
+    const res = await request(app.getHttpServer())
+      .post('/properties')
+      .send(payload )
       .expect(201);
 
     expect(res.body).toHaveProperty('id');
@@ -65,6 +73,8 @@ describe('Properties (e2e)', () => {
   });
 
   it('POST /properties - should return wrong area message', async () => {
+     const resProducers = await request(app.getHttpServer())
+          .get('/producers')
     const res = await request(app.getHttpServer())
       .post('/properties')
       .send({
@@ -74,6 +84,9 @@ describe('Properties (e2e)', () => {
         total_area: 10,
         arable_area: 2,
         vegetation_area: 80,
+        has_irrigation:true,
+        machinery_count:3,
+        producerId:resProducers.body.data[0].id
       })
       .expect(500);
 
@@ -87,8 +100,8 @@ describe('Properties (e2e)', () => {
       .get('/properties')
       .expect(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body.length).toBeGreaterThan(0);
+    expect(Array.isArray(res.body.data)).toBe(true);
+    expect(res.body.data.length).toBeGreaterThan(0);
   });
 
   it('GET /properties/:id - should return the created property', async () => {

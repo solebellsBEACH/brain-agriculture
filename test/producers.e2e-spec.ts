@@ -52,8 +52,8 @@ describe('ProducersController (e2e)', () => {
       .get('/producers')
       .expect(200);
 
-    expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body.length).toBeGreaterThan(0);
+    expect(Array.isArray(res.body.data)).toBe(true);
+    expect(res.body.data.length).toBeGreaterThan(0);
   });
 
   it('/GET producers/:id', async () => {
