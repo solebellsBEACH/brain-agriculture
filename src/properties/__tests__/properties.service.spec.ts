@@ -8,7 +8,6 @@ import { Producer } from 'src/producers/entities/producer.entity';
 import { CreatePropertyDto } from '../dto/create-property.dto';
 import { UpdatePropertyDto } from '../dto/update-property.dto';
 
-
 describe('PropertiesService', () => {
   let service: PropertiesService;
   let repository: jest.Mocked<Repository<Property>>;
@@ -58,8 +57,8 @@ describe('PropertiesService', () => {
         {
           provide: getRepositoryToken(Property),
           useValue: {
-            create: jest.fn().mockImplementation(dto => ({ ...dto })),
-            save: jest.fn().mockImplementation(dto => ({
+            create: jest.fn().mockImplementation((dto) => ({ ...dto })),
+            save: jest.fn().mockImplementation((dto) => ({
               id: 'uuid-123',
               ...dto,
               producer: mockProducer,
@@ -108,7 +107,9 @@ describe('PropertiesService', () => {
 
   it('should throw NotFoundException when property not found', async () => {
     repository.findOneBy.mockResolvedValueOnce(null);
-    await expect(service.findOne('not-exist')).rejects.toThrow(NotFoundException);
+    await expect(service.findOne('not-exist')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 
   it('should update a property', async () => {

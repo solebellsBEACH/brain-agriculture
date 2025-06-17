@@ -32,24 +32,23 @@ describe('Properties (e2e)', () => {
   });
 
   it('POST /properties - should create a property', async () => {
-    const resProducers = await request(app.getHttpServer())
-          .get('/producers')
+    const resProducers = await request(app.getHttpServer()).get('/producers');
     name = faker.person.fullName();
 
     const payload: CreatePropertyDto = {
-        name,
-        city: 'Ribeirão Preto',
-        state: 'SP',
-        total_area: 100,
-        arable_area: 2,
-        vegetation_area: 80,
-        has_irrigation:true,
-        machinery_count:3,
-        producerId:resProducers.body.data[0].id
-      }
+      name,
+      city: 'Ribeirão Preto',
+      state: 'SP',
+      total_area: 100,
+      arable_area: 2,
+      vegetation_area: 80,
+      has_irrigation: true,
+      machinery_count: 3,
+      producerId: resProducers.body.data[0].id,
+    };
     const res = await request(app.getHttpServer())
       .post('/properties')
-      .send(payload )
+      .send(payload)
       .expect(201);
 
     expect(res.body).toHaveProperty('id');
@@ -73,8 +72,7 @@ describe('Properties (e2e)', () => {
   });
 
   it('POST /properties - should return wrong area message', async () => {
-     const resProducers = await request(app.getHttpServer())
-          .get('/producers')
+    const resProducers = await request(app.getHttpServer()).get('/producers');
     const res = await request(app.getHttpServer())
       .post('/properties')
       .send({
@@ -84,9 +82,9 @@ describe('Properties (e2e)', () => {
         total_area: 10,
         arable_area: 2,
         vegetation_area: 80,
-        has_irrigation:true,
-        machinery_count:3,
-        producerId:resProducers.body.data[0].id
+        has_irrigation: true,
+        machinery_count: 3,
+        producerId: resProducers.body.data[0].id,
       })
       .expect(500);
 

@@ -41,9 +41,7 @@ describe('ProducersService', () => {
             find: jest.fn().mockResolvedValue([mockProducer]),
             findOneBy: jest.fn().mockResolvedValue(mockProducer),
             findOne: jest.fn().mockResolvedValue(mockProducer),
-            findAndCount: jest
-              .fn()
-              .mockResolvedValue([[mockProducer], 1]),
+            findAndCount: jest.fn().mockResolvedValue([[mockProducer], 1]),
             update: jest.fn().mockResolvedValue(undefined),
             delete: jest.fn().mockResolvedValue(undefined),
           },

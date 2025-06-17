@@ -4,7 +4,6 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { DataSource } from 'typeorm';
 import { CreateCropDto } from 'src/crop/dto/create-crop.dto';
-import { mocks } from '../src/database/mocks';
 import { UpdateCropDto } from 'src/crop/dto/update-crop.dto';
 
 describe('CropsController (e2e)', () => {
@@ -37,18 +36,18 @@ describe('CropsController (e2e)', () => {
   });
 
   it('should create a crop (POST /crops)', async () => {
-
-    const responseProperty = await request(app.getHttpServer())
-        .get('/properties')
+    const responseProperty = await request(app.getHttpServer()).get(
+      '/properties',
+    );
 
     const crop: CreateCropDto = {
       name: 'Mamão',
       harvest_year: 2003,
       propertyId: responseProperty.body.data[0].id,
-      utilization_percentage:10.3,
-      value_growth:3,
-      value_per_unit:20.5,
-      expected_yield:39
+      utilization_percentage: 10.3,
+      value_growth: 3,
+      value_per_unit: 20.5,
+      expected_yield: 39,
     };
 
     const response = await request(httpServer)
@@ -56,10 +55,10 @@ describe('CropsController (e2e)', () => {
       .send(crop)
       .expect(201);
 
-      expect(response.body).toHaveProperty('id');
-      expect(response.body.name).toBe(crop.name);
+    expect(response.body).toHaveProperty('id');
+    expect(response.body.name).toBe(crop.name);
 
-      createdCropId = response.body.id;
+    createdCropId = response.body.id;
   });
 
   it('should retrieve all crops (GET /crops)', async () => {
