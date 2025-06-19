@@ -98,6 +98,7 @@ const cropData: Crop[] = [
 ];
 
 export const cropsMock = {
+  data:cropData,
   findAll(page = 1, limit = 10) {
     const skip = (page - 1) * limit;
     const data = cropData.slice(skip, skip + limit);

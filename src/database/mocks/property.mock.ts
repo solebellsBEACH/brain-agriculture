@@ -31,7 +31,6 @@ function getRandomProducer() {
 
 function generateProperty(index: number): Property {
   const producer = getRandomProducer();
-
   return {
     id: faker.string.uuid(),
     name: `${faker.company.name()} Farm #${index + 1}`,
@@ -52,6 +51,7 @@ const propertyData: Property[] = Array.from({ length: 50 }, (_, i) =>
 );
 
 export const propertyMocks = {
+  data:propertyData,
   findAll(page = 1, limit = 10) {
     const skip = (page - 1) * limit;
     const data = propertyData.slice(skip, skip + limit);
