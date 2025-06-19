@@ -20,20 +20,35 @@ export class InsightsService {
     const totalFarms = await this.producerRepository.count();
 
     const properties = await this.propertyRepository.find();
-    const totalHectares = properties.reduce((sum, p) => sum + (p.total_area || 0), 0);
+    const totalHectares = properties.reduce(
+      (sum, p) => sum + (p.total_area || 0),
+      0,
+    );
 
-    const byState = properties.reduce((acc, prop) => {
-      acc[prop.state] = (acc[prop.state] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    const byStateArray = Object.entries(byState).map(([name, value]) => ({ name, value }));
+    const byState = properties.reduce(
+      (acc, prop) => {
+        acc[prop.state] = (acc[prop.state] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+    const byStateArray = Object.entries(byState).map(([name, value]) => ({
+      name,
+      value,
+    }));
 
     const crops = await this.cropRepository.find();
-    const byCrop = crops.reduce((acc, crop) => {
-      acc[crop.name] = (acc[crop.name] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    const byCropArray = Object.entries(byCrop).map(([name, value]) => ({ name, value }));
+    const byCrop = crops.reduce(
+      (acc, crop) => {
+        acc[crop.name] = (acc[crop.name] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+    const byCropArray = Object.entries(byCrop).map(([name, value]) => ({
+      name,
+      value,
+    }));
 
     const landUse = properties.reduce(
       (acc, prop) => {

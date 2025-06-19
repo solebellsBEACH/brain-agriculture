@@ -41,7 +41,6 @@ export class PropertiesController {
   @Get()
   @ApiOperation({ summary: 'List all properties with pagination' })
   findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
-
     return this.service.findAll(Number(page), Number(limit));
   }
 
