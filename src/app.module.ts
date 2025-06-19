@@ -6,6 +6,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ProducersModule } from './producers/producers.module';
 import { CropModule } from './crop/crop.module';
 import { getDbConfig } from './database/config';
+import { InsightsModule } from './insights/insights.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { getDbConfig } from './database/config';
     PropertiesModule,
     ProducersModule,
     CropModule,
+    InsightsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
